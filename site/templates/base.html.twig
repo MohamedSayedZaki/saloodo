@@ -4,6 +4,10 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -11,9 +15,44 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <script>
+            var url ="http://localhost:8001/";
+            </script>
         {% endblock %}
+
+        <style>
+        .navbar-inverse {
+            background-color: #eee;
+            border-color: #eee;
+            padding-bottom:5px;
+        }
+        .navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-nav>li>a:hover{
+            color:#000;
+        }
+        </style>
     </head>
     <body>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <nav class="navbar navbar-inverse navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" >
+                            <img src="{{asset('images/saloodo.png')}}" style="width:100px;">
+                        </a>
+                    </div>
+                    <div id="navbar3" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Howdy, <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('app_logout') }}">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        {% endif %}
         {% block body %}{% endblock %}
     </body>
 </html>
