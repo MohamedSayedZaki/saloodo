@@ -1,0 +1,174 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login!{% endblock %}
+
+{% block body %}
+<section>
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-12 col-xl-10">
+
+        <div class="card">
+          <div class="card-header p-3">
+            <h3 class="mb-0"><i class="fas fa-tasks me-2"></i>Parcels List</h3>
+          </div>
+          <div class="card-body" data-mdb-perfect-scrollbar="true">
+
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                    <th colspan="8" style="text-align:center;"><h3>Completed Todos</h3></th>                            
+                </tr>                
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Pick-up</th>
+                    <th scope="col">Drop-off</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Biker Name</th>
+                    <th scope="col">Pick Up At</th>
+                    <th scope="col">Drop Off At</th>     
+                    <th scope="col">Actions</th>                                 
+                </tr>
+              </thead>
+              <tbody>
+                {% for parcel in parcels %}
+                  {% for bikerParcel in bikerParcelsCompleted %}
+                    {% if(parcel == bikerParcel.parcel and bikerParcel.status == "done") %}
+                      <tr class="fw-normal">
+                        <th>
+                          <span class="ms-2">{{ parcel.title }}</span>
+                        </th>
+                        <td class="align-middle">
+                          <span>{{ parcel.pick_up }}</span>
+                        </td>
+                        <td class="align-middle">
+                          <span>{{ parcel.drop_off }}</span>
+                        </td>
+                        <td class="align-middle">
+                          <span>{{ bikerParcel.status }}</span>
+                        </td>                  
+                        <td class="align-middle">
+                          <span>{{ bikerParcel.biker.id }}</span>
+                        </td>              
+                        <td class="align-middle">
+                          <span>{{ bikerParcel.pickUpAt|date('d-m-Y h:i:s') }}</span>
+                        </td>              
+                        <td class="align-middle">
+                          <span>{{ bikerParcel.dropOffAt|date('d-m-Y h:i:s') }}</span>
+                        </td>                                                      
+                        <td class="align-middle">
+                          <button class="parcel btn" data-id="{{ parcel.id }}" {% if(parcel.id == bikerParcel.parcel.id) %} disabled {% endif %}> Accept</button>
+                        </td>                                                      
+                      </tr>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}     
+              </tbody>
+            </table>
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                    <th colspan="8" style="text-align:center;"><h3>Pending Todos</h3></th>                            
+                </tr>                
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Pick-up</th>
+                    <th scope="col">Drop-off</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Biker Name</th>
+                    <th scope="col">Pick Up At</th>
+                    <th scope="col">Drop Off At</th>     
+                    <th scope="col">Actions</th>                                 
+                </tr>
+              </thead>
+              <tbody>
+                {% for parcel in parcels %}
+                  {% for bikerParcel in bikerParcelsPending|filter(bikerParcel => parcel.id == bikerParcel.parcel.id) %}
+                      <tr class="fw-normal">
+                        <th>
+                          <span class="ms-2">{{ parcel.title }}</span>
+                        </th>
+                        <td class="align-middle">
+                          <span>{{ parcel.pick_up }}</span>
+                        </td>
+                        <td class="align-middle">
+                          <span>{{ parcel.drop_off }}</span>
+                        </td>
+                        <td class="align-middle">
+                          <span>{{ bikerParcel.status }}</span>
+                        </td>                  
+                        <td class="align-middle">
+                          <span>{{ bikerParcel.biker.id }}</span>
+                        </td>              
+                        <td class="align-middle">
+                          <span>{{ bikerParcel.pickUpAt|date('d-m-Y h:i:s') }}</span>
+                        </td>              
+                        <td class="align-middle">
+                          <span>{{ bikerParcel.dropOffAt|date('d-m-Y h:i:s') }}</span>
+                        </td>                                                      
+                        <td class="align-middle">
+                          <button class="parcel btn" data-id="{{ parcel.id }}" {% if(parcel.id == bikerParcel.parcel.id) %} disabled {% endif %}> Accept</button>
+                        </td>                                                      
+                      </tr>
+                  {% endfor %}
+                {% endfor %}                                
+              </tbody>
+            </table>
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                    <th colspan="8" style="text-align:center;"><h3>Unassigned Todos</h3></th>                            
+                </tr>                
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Pick-up</th>
+                    <th scope="col">Drop-off</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Biker Name</th>
+                    <th scope="col">Pick Up At</th>
+                    <th scope="col">Drop Off At</th>     
+                    <th scope="col">Actions</th>                                 
+                </tr>
+              </thead>
+              <tbody>
+                {% for parcel in unassignedParcels %}
+                  {% if (parcel.status != "done") %}
+                      <tr class="fw-normal">
+                        <th>
+                          <span class="ms-2">{{ parcel.parcel.title }}</span>
+                        </th>
+                        <td class="align-middle">
+                          <span>{{ parcel.parcel.pick_up }}</span>
+                        </td>
+                        <td class="align-middle">
+                          <span>{{ parcel.parcel.drop_off }}</span>
+                        </td>
+                        <td class="align-middle">
+                          <span></span>
+                        </td>                  
+                        <td class="align-middle">
+                          <span></span>
+                        </td>              
+                        <td class="align-middle">
+                          <span></span>
+                        </td>              
+                        <td class="align-middle">
+                          <span></span>
+                        </td>                                                      
+                        <td class="align-middle">
+                          <button class="parcel btn" data-id="{{ parcel.parcel.id }}"> Accept</button>
+                        </td>                                                      
+                      </tr>
+                    {% endif %}
+                {% endfor %}                                
+              </tbody>
+            </table>            
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<script src="{{ asset('js/todo.js') }}?version={{random(1,4)}}"></script>
+{% endblock %}
