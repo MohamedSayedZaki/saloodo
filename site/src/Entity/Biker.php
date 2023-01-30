@@ -2,15 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\SenderRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\BikerRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\BikerParcel;
 
-#[ORM\Entity(repositoryClass: SenderRepository::class)]
-#[ORM\Table(name: "sender")]
-class Sender
+#[ORM\Entity(repositoryClass: BikerRepository::class)]
+#[ORM\Table(name: "biker")]
+class Biker
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -27,15 +26,10 @@ class Sender
     private ?\DateTimeInterface $updated_at = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?User $user = null;
+    private ?User $user = null;    
 
-    #[ORM\OneToMany(mappedBy: 'sender', targetEntity: Parcel::class, orphanRemoval: true)]
-    private Collection $parcels;
-
-    public function __construct()
-    {
-        $this->parcels = new ArrayCollection();
-    }    
+    #[ORM\OneToMany(targetEntity: "BikerParcel", mappedBy: 'biker')]
+    private $theParcelBiker;    
 
     public function getId(): ?int
     {
@@ -90,11 +84,8 @@ class Sender
         return $this;
     }
 
-    /**
-     * @return Collection<int, Parcel>
-     */
-    public function getParcels(): Collection
+    public function getTheParcelBiker():?BikerParcel
     {
-        return $this->parcels;
+        return $this->theParcelBiker;
     }
 }
