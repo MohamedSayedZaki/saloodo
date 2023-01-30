@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ParcelRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\BikerParcel;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: ParcelRepository::class)]
 class Parcel
@@ -83,7 +84,7 @@ class Parcel
         return $this;
     }
 
-    public function getTheBikerParcel():?BikerParcel
+    public function getTheBikerParcel():?Collection
     {
         return $this->theBikerParcel;
     }
