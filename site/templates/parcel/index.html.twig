@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login!{% endblock %}
+
+{% block body %}
+<style>
+</style>
+<div class="container">
+    <div class="col-md-12">
+        <h3>View All Parcels</h3>
+        {% if is_granted('ROLE_SENDER') %}
+            <div><a href="{{path('app_add_parcel')}}">Add New Parcel</a></div>      
+        {% endif %}  
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Pick-up</th>
+                <th>Drop-off</th>
+                <th>Status</th>
+                <th>Biker Name</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for parcel in parcels %}
+            <tr>
+                <td>{{ parcel.title }}</td>
+                <td>{{ parcel.pick_up }}</td>
+                <td>{{ parcel.drop_off }}</td>
+                <td>Doe</td>
+                <td>John</td>
+                <td>Doe</td>
+                <td>John</td>                                                
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+  </div>
+</div>
+
+<script src="{{ asset('js/parcel.js') }}"></script>
+{% endblock %}
