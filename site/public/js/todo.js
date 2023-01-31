@@ -14,7 +14,7 @@ $(document).ready(function(){
             success: function(data){
                 console.log(data);
                 alert(data.responseText);
-                location.reload();
+                location.href = url + "api/todo";
             },
             error: function (data){
                 $(this).attr("disabled");

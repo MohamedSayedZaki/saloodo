@@ -32,11 +32,14 @@ class TodoService
             }, $parcels),
                 array_map(function($parcel) { 
                     return $parcel->getParcel()->getId(); 
-            }, $bikerParcelsPending)
+            }, $bikerParcelsPending),
+                array_map(function($parcel) { 
+                    return $parcel->getParcel()->getId(); 
+            }, $bikerParcelsCompleted)            
         );
 
         $unassignedParcels = $parcelRepository->findBy(['id' => $ids]);
-        $unassignedParcels = $bikerParcelRepository->findBy(['parcel' => $unassignedParcels]);
+        $unassignedParcels = $bikerParcelRepository->findBy(['parcel' => $unassignedParcels])? $bikerParcelRepository->findBy(['parcel' => $unassignedParcels]): $unassignedParcels;
 
         return [$parcels, $bikerParcelsCompleted, $bikerParcelsPending, $unassignedParcels];
     }

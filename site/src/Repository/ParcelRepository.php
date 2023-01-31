@@ -39,20 +39,22 @@ class ParcelRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Parcel[] Returns an array of Parcel objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Parcel[] Returns an array of Parcel objects
+    */
+   public function findSenderParcels($value): array
+   {
+       return $this->createQueryBuilder('p')
+            ->select('p, bp')
+            ->join('p.theBikerParcel', 'bp')
+            ->andWhere('p.sender = :val')
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(20)
+            ->getQuery()
+            ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Parcel
 //    {

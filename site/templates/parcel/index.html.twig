@@ -18,6 +18,7 @@
         <table class="table">
             <thead>
             <tr>
+                <th>ID</th>
                 <th>Title</th>
                 <th>Pick-up</th>
                 <th>Drop-off</th>
@@ -30,13 +31,16 @@
             <tbody>
             {% for parcel in parcels %}
             <tr>
+                <td>{{ parcel.id }}</td>
                 <td>{{ parcel.title }}</td>
                 <td>{{ parcel.pick_up }}</td>
                 <td>{{ parcel.drop_off }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>                                                
+                {% for bp in parcel.theBikerParcel %}
+                    <td>{{ bp.status }}</td>
+                    <td>{{ bp.biker.user.username }}</td>
+                    <td>{{ bp.pickUpAt|date('d-m-Y h:i:s') }}</td>
+                    <td>{{ bp.dropOffAt|date('d-m-Y h:i:s') }}</td>            
+                {% endfor %}              
             </tr>
             {% endfor %}
             </tbody>
@@ -44,5 +48,5 @@
   </div>
 </div>
 
-<script src="{{ asset('js/parcel.js') }}"></script>
+<script src="{{ asset('js/parcel.js') }}?version={{random(1,4)}}"></script>
 {% endblock %}

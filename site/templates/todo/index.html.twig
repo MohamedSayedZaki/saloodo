@@ -20,6 +20,7 @@
                     <th colspan="8" style="text-align:center;"><h3>Completed Todos</h3></th>                            
                 </tr>                
                 <tr>
+                    <th scope="col">ID</th>
                     <th scope="col">Title</th>
                     <th scope="col">Pick-up</th>
                     <th scope="col">Drop-off</th>
@@ -35,6 +36,9 @@
                   {% for bikerParcel in bikerParcelsCompleted %}
                     {% if(parcel == bikerParcel.parcel and bikerParcel.status == "done") %}
                       <tr class="fw-normal">
+                        <th>
+                          <span class="ms-2">{{ parcel.id }}</span>
+                        </th>
                         <th>
                           <span class="ms-2">{{ parcel.title }}</span>
                         </th>
@@ -71,6 +75,7 @@
                     <th colspan="8" style="text-align:center;"><h3>Pending Todos</h3></th>                            
                 </tr>                
                 <tr>
+                    <th scope="col">ID</th>
                     <th scope="col">Title</th>
                     <th scope="col">Pick-up</th>
                     <th scope="col">Drop-off</th>
@@ -85,6 +90,9 @@
                 {% for parcel in parcels %}
                   {% for bikerParcel in bikerParcelsPending|filter(bikerParcel => parcel.id == bikerParcel.parcel.id) %}
                       <tr class="fw-normal">
+                        <th>
+                          <span class="ms-2">{{ parcel.id }}</span>
+                        </th>                      
                         <th>
                           <span class="ms-2">{{ parcel.title }}</span>
                         </th>
@@ -120,6 +128,7 @@
                     <th colspan="8" style="text-align:center;"><h3>Unassigned Todos</h3></th>                            
                 </tr>                
                 <tr>
+                    <th scope="col">ID</th>
                     <th scope="col">Title</th>
                     <th scope="col">Pick-up</th>
                     <th scope="col">Drop-off</th>
@@ -132,16 +141,18 @@
               </thead>
               <tbody>
                 {% for parcel in unassignedParcels %}
-                  {% if (parcel.status != "done") %}
                       <tr class="fw-normal">
                         <th>
-                          <span class="ms-2">{{ parcel.parcel.title }}</span>
+                          <span class="ms-2">{{ parcel.parcel.id ?? parcel.id }}</span>
+                        </th>
+                        <th>
+                          <span class="ms-2">{{ parcel.parcel.title ?? parcel.title }}</span>
                         </th>
                         <td class="align-middle">
-                          <span>{{ parcel.parcel.pick_up }}</span>
+                          <span>{{ parcel.parcel.pick_up ?? parcel.pick_up }}</span>
                         </td>
                         <td class="align-middle">
-                          <span>{{ parcel.parcel.drop_off }}</span>
+                          <span>{{ parcel.parcel.drop_off ?? parcel.drop_off}}</span>
                         </td>
                         <td class="align-middle">
                           <span></span>
@@ -156,10 +167,9 @@
                           <span></span>
                         </td>                                                      
                         <td class="align-middle">
-                          <button class="parcel btn" data-id="{{ parcel.parcel.id }}"> Accept</button>
+                          <button class="parcel btn" data-id="{{ parcel.parcel.id ?? parcel.id }}"> Accept</button>
                         </td>                                                      
                       </tr>
-                    {% endif %}
                 {% endfor %}                                
               </tbody>
             </table>            

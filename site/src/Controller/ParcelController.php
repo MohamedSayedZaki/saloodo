@@ -27,7 +27,7 @@ class ParcelController extends AbstractController
     {
         $user = $this->security->getUser();
         $parcels = $this->parcelService->getSenderParcels($user);
-
+        // dd($parcels[0]->getTheBikerParcel());
         return $this->render('parcel/index.html.twig', [
             'parcels' => $parcels,
         ]);

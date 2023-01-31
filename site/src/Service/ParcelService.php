@@ -21,7 +21,7 @@ class ParcelService
         $sender = $repository->findOneBy(['user' => $user]);
 
         $repository = $this->doctrine->getRepository(Parcel::class);
-        return $repository->findBy(['sender' => $sender]);
+        return $repository->findSenderParcels($sender);
     }
 
     public function createParcel($request, $user)

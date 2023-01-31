@@ -20,7 +20,8 @@ $(document).ready(function(){
             },
             error: function (data){
                 alert(data);        
-                location.href = url + "logout";
+                console.log(data);
+                // location.href = url + "logout";
             }            
         });
 
